@@ -1,13 +1,10 @@
-# import necessary libraries
 import requests
 import json
 
-# Define ERP API endpoints and credentials
-ERP_BASE_URL = "https://your-erp-api-url.com"
-ERP_API_KEY = "your_api_key"
-ERP_API_SECRET = "your_api_secret"
+ERP_BASE_URL = "url"
+ERP_API_KEY = "api_key"
+ERP_API_SECRET = "api_secret"
 
-# Function to authenticate with the ERP API
 def authenticate():
     auth_url = f"{ERP_BASE_URL}/auth"
     auth_data = {
@@ -22,7 +19,6 @@ def authenticate():
     else:
         raise Exception(f"Authentication failed. Status code: {response.status_code}, Response: {response.text}")
 
-# Function to make API requests to ERP
 def erp_api_request(endpoint, method="GET", data=None):
     url = f"{ERP_BASE_URL}/{endpoint}"
     headers = {
@@ -42,15 +38,37 @@ def erp_api_request(endpoint, method="GET", data=None):
     else:
         raise Exception(f"ERP API request failed. Status code: {response.status_code}, Response: {response.text}")
 
-# Example: Get list of customers from ERP
 def get_customers():
     endpoint = "customers"
     customers = erp_api_request(endpoint)
     return customers
 
-# Example: Create a new order in ERP
 def create_order(order_data):
     endpoint = "orders"
     response = erp_api_request(endpoint, method="POST", data=order_data)
     return response
+
+def main():
+    try:
+        
+        customers = get_customers()
+        print("Customers:", customers)
+
+        # Example: Create a new order
+        order_data = {
+            "customer_id": 123,
+            "products": [
+                {"product_id": 1, "quantity": 2},
+                {"product_id": 2, "quantity": 3}
+            ]
+        }
+        new_order = create_order(order_data)
+        print("New Order:", new_order)
+
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
+
 
