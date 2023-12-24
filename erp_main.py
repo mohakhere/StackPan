@@ -47,6 +47,28 @@ def create_order(order_data):
     endpoint = "orders"
     response = erp_api_request(endpoint, method="POST", data=order_data)
     return response
+def main():
+    try:
+        
+        customers = get_customers()
+        print("Customers:", customers)
+
+        # Example: Create a new order
+        order_data = {
+            "customer_id": 123,
+            "products": [
+                {"product_id": 1, "quantity": 2},
+                {"product_id": 2, "quantity": 3}
+            ]
+        }
+        new_order = create_order(order_data)
+        print("New Order:", new_order)
+
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
 
 
 
